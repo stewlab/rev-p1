@@ -7,7 +7,7 @@ import java.util.List;
 public interface EmployeeDao {
 
 //    POST /employees
-    void addEmployee(Employee employee);
+    Employee addEmployee(Employee employee);
 
 //    GET /employees
     List<Employee> getEmployees();
@@ -16,8 +16,8 @@ public interface EmployeeDao {
     Employee getEmployee();
 
 //    PUT /employees/150
-    void updateEmployee(Employee employee);
+    Employee updateEmployee(Employee employee);
 
 //    DELETE /employees/190
-    void deleteEmployee(Integer employeeId);
+    Employee deleteEmployee(Integer employeeId);
 }
