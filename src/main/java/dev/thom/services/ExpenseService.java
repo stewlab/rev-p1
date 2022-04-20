@@ -7,7 +7,7 @@ import java.util.List;
 public interface ExpenseService {
 
     //    POST /expenses
-    void addExpense(Expense expense);
+    Expense addExpense(Expense expense);
 
     //    GET /expenses?status=pending
     List<Expense> getExpenseByStatus(String status);
@@ -16,21 +16,21 @@ public interface ExpenseService {
     Expense getExpense(Integer expenseId);
 
     //    PUT /expenses/15
-    void updateExpense(Expense expense);
+    Expense updateExpense(Expense expense);
 
     //    PATCH /expenses/20/approve
-    void approveExpense(Integer expenseId);
+    Expense approveExpense(Integer expenseId);
 
     //    PATCH /expenses/20/deny
-    void denyExpense(Integer expenseId);
+    Expense denyExpense(Integer expenseId);
 
     //    DELETE/expenses/19
-    void deleteExpense(Integer expenseId);
+    Expense deleteExpense(Integer expenseId);
 
     //    GET /employees/120/expenses
     List<Expense> getExpensesByEmployeeId(Integer employeeId);
 
     //    POST /employees/120/expenses
-    void addExpenseByEmployeeId(Expense expense, Integer employeeId);
+    Expense addExpenseByEmployeeId(Expense expense, Integer employeeId);
 
 }

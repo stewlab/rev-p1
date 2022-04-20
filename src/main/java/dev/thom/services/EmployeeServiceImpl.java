@@ -5,9 +5,10 @@ import dev.thom.entities.Employee;
 import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    @Override
-    public void addEmployee(Employee employee) {
 
+    @Override
+    public Employee addEmployee(Employee employee) {
+        return null;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
-
+    public Employee updateEmployee(Employee employee) {
+        return null;
     }
 
     @Override
-    public void deleteEmployee(Integer employeeId) {
-
+    public Employee deleteEmployee(Integer employeeId) {
+        return null;
     }
 }

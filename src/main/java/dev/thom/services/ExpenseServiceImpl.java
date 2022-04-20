@@ -5,9 +5,10 @@ import dev.thom.entities.Expense;
 import java.util.List;
 
 public class ExpenseServiceImpl implements ExpenseService {
-    @Override
-    public void addExpense(Expense expense) {
 
+    @Override
+    public Expense addExpense(Expense expense) {
+        return null;
     }
 
     @Override
@@ -21,23 +22,23 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void updateExpense(Expense expense) {
-
+    public Expense updateExpense(Expense expense) {
+        return null;
     }
 
     @Override
-    public void approveExpense(Integer expenseId) {
-
+    public Expense approveExpense(Integer expenseId) {
+        return null;
     }
 
     @Override
-    public void denyExpense(Integer expenseId) {
-
+    public Expense denyExpense(Integer expenseId) {
+        return null;
     }
 
     @Override
-    public void deleteExpense(Integer expenseId) {
-
+    public Expense deleteExpense(Integer expenseId) {
+        return null;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void addExpenseByEmployeeId(Expense expense, Integer employeeId) {
-
+    public Expense addExpenseByEmployeeId(Expense expense, Integer employeeId) {
+        return null;
     }
 }
