@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Employee {
 
-    private Integer employee_id;
+    private Integer employeeId;
     private String firstName;
     private String lastName;
     private Long createDate;

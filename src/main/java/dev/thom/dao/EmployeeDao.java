@@ -13,7 +13,7 @@ public interface EmployeeDao {
     List<Employee> getEmployees();
 
 //    GET /employees/120
-    Employee getEmployee();
+    Employee getEmployee(Integer employeeId);
 
 //    PUT /employees/150
     Employee updateEmployee(Employee employee);

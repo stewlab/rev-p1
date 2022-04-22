@@ -54,6 +54,11 @@ public class App {
 
         Javalin javalinApp = Javalin.create();
 
+        javalinApp.get("/", context -> {
+            context.result("Employee Expense app started!!!");
+            context.status(200);
+        });
+
         // POST /employees
         javalinApp.post("/employees", context -> {
 
@@ -69,7 +74,7 @@ public class App {
 
         });
 
-        javalinApp.start(7000);
+        javalinApp.start(5000);
 
     }
 
