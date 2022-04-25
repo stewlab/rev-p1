@@ -1,6 +1,7 @@
 package dev.thom.api;
 
 import com.google.gson.Gson;
+import dev.thom.dao.EmployeeDaoImpl;
 import dev.thom.entities.Employee;
 import dev.thom.services.EmployeeService;
 import dev.thom.services.EmployeeServiceImpl;
@@ -50,7 +51,7 @@ public class App {
     public static void main(String[] args) {
 
         ExpenseService expenseService = new ExpenseServiceImpl();
-        EmployeeService employeeService = new EmployeeServiceImpl();
+        EmployeeService employeeService = new EmployeeServiceImpl(new EmployeeDaoImpl());
 
         Javalin javalinApp = Javalin.create();
 
@@ -58,6 +59,18 @@ public class App {
             context.result("Employee Expense app started!!!");
             context.status(200);
         });
+
+        //    ### Employee Routes
+        //- POST /employees
+        //  - returns a 201
+        // - GET /employees
+        //- GET /employees/120
+        //            - returns a 404 if employee not found
+        //- PUT /employees/150
+        //            - returns a 404 if employee not found
+        //- DELETE /employees/190
+        //            - returns a 404 if employee not found
+
 
         // POST /employees
         javalinApp.post("/employees", context -> {
@@ -73,6 +86,92 @@ public class App {
             context.result("Added employee!!!");
 
         });
+
+        // GET /employees
+        javalinApp.get("/employees", context -> {
+
+            Gson gson = new Gson();
+
+            List<Employee> employeeList = employeeService.getEmployees();
+            String response = gson.toJson(employeeList);
+
+            context.status(201);
+            context.result(response);
+
+        });
+
+        // GET /employees/120
+        javalinApp.get("/employees/{id}", context -> {
+
+            String response = "";
+            Gson gson = new Gson();
+
+            Integer employeeId = Integer.valueOf(context.pathParam("id"));
+
+            Employee employee = employeeService.getEmployee(employeeId);
+
+            if (employee.getEmployeeId() != null) {
+                response = gson.toJson(employee);
+                context.status(201);
+            } else {
+                response = "Employee not found";
+                context.status(404);
+            }
+
+            context.result(response);
+
+        });
+
+        //PUT /employees/150
+        javalinApp.put("/employees/{id}", context -> {
+
+            String response = "";
+            Gson gson = new Gson();
+
+            String body = context.body();
+
+            Employee employeeRequest = gson.fromJson(body, Employee.class);
+            Integer employeeId = Integer.valueOf(context.pathParam("id"));
+
+            if (employeeId != null) {
+                employeeRequest.setEmployeeId(employeeId);
+            }
+
+            Employee employeeResponse = employeeService.updateEmployee(employeeRequest);
+
+            if (employeeResponse.getEmployeeId() != null) {
+                response = gson.toJson(employeeResponse);
+                context.status(201);
+            } else {
+                response = "Employee not found";
+                context.status(404);
+            }
+
+            context.result(response);
+
+        });
+
+//        DELETE /employees/190
+        javalinApp.delete("/employees/{id}", context -> {
+
+            String response = "";
+
+            Integer employeeId = Integer.valueOf(context.pathParam("id"));
+
+            Employee employeeResponse = employeeService.deleteEmployee(employeeId);
+
+            if (employeeResponse.getEmployeeId() != null) {
+                response = "Delete successful";
+                context.status(201);
+            } else {
+                response = "Employee not found";
+                context.status(404);
+            }
+
+            context.result(response);
+
+        });
+
 
         javalinApp.start(5000);
 

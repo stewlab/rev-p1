@@ -2,13 +2,12 @@ package dev.thom.dao;
 
 import dev.thom.entities.Employee;
 import dev.thom.utilities.ConnectionUtil;
+import dev.thom.utilities.EmployeeUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
@@ -32,6 +31,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
             "FROM employee \n" +
             "WHERE employee_id = ? \n";
 
+    public static final String UPDATE_EMPLOYEE = "" +
+            "UPDATE employee \n" +
+            "SET first_name=?, last_name=?, modify_date=current_date \n" +
+            "WHERE employee_id=? \n";
+
+    public static final String DELETE_EMPLOYEE = "" +
+            "DELETE FROM employee \n" +
+            "WHERE employee_id = ? \n";
+
     @Override
     public Employee addEmployee(Employee employee) {
         Employee newEmployee = new Employee();
@@ -50,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             if (resultSet.next()) {
 
-                newEmployee = buildEmployeeFromResultSet(resultSet);
+                newEmployee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
 
             }
 
@@ -74,7 +82,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             while (resultSet.next()) {
 
-                Employee employee = buildEmployeeFromResultSet(resultSet);
+                Employee employee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
                 newEmployeeList.add(employee);
 
             }
@@ -100,7 +108,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             if (resultSet.next()) {
 
-                employee = buildEmployeeFromResultSet(resultSet);
+                employee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
 
             }
 
@@ -113,34 +121,54 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        return null;
+        Employee updatedEmployee = new Employee();
+
+        try (Connection connection = ConnectionUtil.createConnection(null)) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE,
+                    Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setInt(3, employee.getEmployeeId());
+
+            preparedStatement.execute();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                updatedEmployee = EmployeeUtil.buildEmployeeFromResultSet(generatedKeys);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return updatedEmployee;
     }
 
     @Override
     public Employee deleteEmployee(Integer employeeId) {
-        return null;
-    }
+        Employee deletedEmployee = new Employee();
 
-    private static Employee buildEmployeeFromResultSet(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
+        try (Connection connection = ConnectionUtil.createConnection(null)) {
 
-        if (resultSet != null) {
-            Integer employeeId = resultSet.getInt("employee_id");
-            String firstName = resultSet.getString("first_name");
-            String lastName = resultSet.getString("last_name");
-            Long createDate = resultSet.getTimestamp("create_date").getTime();
-            Long modifyDate = resultSet.getTimestamp("modify_date").getTime();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE,
+                    Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, employeeId);
 
+            preparedStatement.execute();
 
-            employee.setEmployeeId(employeeId);
-            employee.setFirstName(firstName);
-            employee.setLastName(lastName);
-            employee.setCreateDate(createDate);
-            employee.setModifyDate(modifyDate);
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                deletedEmployee = EmployeeUtil.buildEmployeeFromResultSet(generatedKeys);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-
-        return employee;
-
+        return deletedEmployee;
     }
+
 }
