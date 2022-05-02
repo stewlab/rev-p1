@@ -10,11 +10,11 @@ public class ConnectionUtil {
     public static Connection createConnection(Properties databaseProperties) throws SQLException {
 
         Properties dbProperties = new Properties();
-        databaseProperties.setProperty("url", "jdbc:postgresql://revaturedb.cilcmbbm7xyz.us-east-1.rds.amazonaws.com/revaturedb");
-        databaseProperties.setProperty("user", "postgres");
-        databaseProperties.setProperty("password", "args[0]");
+        dbProperties.setProperty("url", "jdbc:postgresql://revaturedb.cilcmbbm7xyz.us-east-1.rds.amazonaws.com/revaturedb");
+        dbProperties.setProperty("user", "postgres");
+        dbProperties.setProperty("password", "");
 
-        String url = databaseProperties.getProperty("url","");
+        String url = dbProperties.getProperty("url","");
         Connection connection = DriverManager.getConnection(url, dbProperties);
 
 
