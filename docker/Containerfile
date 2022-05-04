@@ -1,0 +1,9 @@
+FROM openjdk
+
+EXPOSE 5000
+
+WORKDIR /app
+
+COPY project1-1.0-SNAPSHOT.jar /app/project1-1.0-SNAPSHOT.jar
+
+CMD ["java", "-jar", "/app/project1-1.0-SNAPSHOT.jar"]
