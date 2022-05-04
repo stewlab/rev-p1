@@ -9,6 +9,9 @@ public interface ExpenseService {
     //    POST /expenses
     Expense addExpense(Expense expense);
 
+    //    GET /expenses
+    List<Expense> getExpenses();
+
     //    GET /expenses?status=pending
     List<Expense> getExpenseByStatus(String status);
 
@@ -31,6 +34,5 @@ public interface ExpenseService {
     List<Expense> getExpensesByEmployeeId(Integer employeeId);
 
     //    POST /employees/120/expenses
-    Expense addExpenseByEmployeeId(Expense expense, Integer employeeId);
 
 }

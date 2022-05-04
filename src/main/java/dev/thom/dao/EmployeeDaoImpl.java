@@ -2,7 +2,7 @@ package dev.thom.dao;
 
 import dev.thom.entities.Employee;
 import dev.thom.utilities.ConnectionUtil;
-import dev.thom.utilities.EmployeeUtil;
+import dev.thom.utilities.ProjectUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             if (resultSet.next()) {
 
-                newEmployee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
+                newEmployee = ProjectUtil.buildEmployeeFromResultSet(resultSet);
 
             }
 
@@ -82,7 +82,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             while (resultSet.next()) {
 
-                Employee employee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
+                Employee employee = ProjectUtil.buildEmployeeFromResultSet(resultSet);
                 newEmployeeList.add(employee);
 
             }
@@ -108,7 +108,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
             if (resultSet.next()) {
 
-                employee = EmployeeUtil.buildEmployeeFromResultSet(resultSet);
+                employee = ProjectUtil.buildEmployeeFromResultSet(resultSet);
 
             }
 
@@ -136,7 +136,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
             if (generatedKeys.next()) {
-                updatedEmployee = EmployeeUtil.buildEmployeeFromResultSet(generatedKeys);
+                updatedEmployee = ProjectUtil.buildEmployeeFromResultSet(generatedKeys);
             }
 
         } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
             if (generatedKeys.next()) {
-                deletedEmployee = EmployeeUtil.buildEmployeeFromResultSet(generatedKeys);
+                deletedEmployee = ProjectUtil.buildEmployeeFromResultSet(generatedKeys);
             }
 
         } catch (SQLException e) {
